@@ -29,6 +29,7 @@ index.php
 install.php
 update.php
 xmlrpc.php
+connection.inc
 /includes
 /misc
 /modules
