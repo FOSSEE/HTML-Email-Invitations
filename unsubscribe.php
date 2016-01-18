@@ -1,3 +1,4 @@
+
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -16,7 +17,7 @@ ini_set('display_errors', 1);
     {
       global $conn;
       // try to update user with specified information
-      $email_id_hash = urldecode($email_id_hash);
+      $email_id_hash = $email_id_hash;
      // var_dump($email_id_hash);die;
       $sql           = "SELECT email, unsubscribe, email_hash  FROM sent_email WHERE email_hash = :email_id_hash AND event= :event";
       $q             = $conn->prepare($sql);
@@ -28,12 +29,9 @@ ini_set('display_errors', 1);
         {
           foreach ($data as $row)
             {
-              if ($data != NULL)
-                {
-                  switch ($event)
-                  {
-
-                     case 'scipy 2015':
+             
+                  if($event=='scipy 2015')
+                  {                     
                           if ($row['unsubscribe'] == 0 && $row['email_hash'] == $email_id_hash)
                             {
                               $sql_up = "UPDATE sent_email SET unsubscribe = 1 WHERE email_hash =:email_id_hash ";
@@ -57,8 +55,7 @@ ini_set('display_errors', 1);
                               echo '<br><br>If you are not automatically redirected, click here: <a href="http://scipy.in">SciPy India 2015</a>.';
                               header('Refresh: 3; URL=http://scipy.in');
                             }
-                          break;
-                      case 'cfd-openfoam-symposium 2016':
+                          }elseif($event=='cfd-openfoam-symposium-2016'){
                           if ($row['unsubscribe'] == 0 && $row['email_hash'] == $email_id_hash)
                             {
                               $sql_up = "UPDATE sent_email SET unsubscribe = 1 WHERE email_hash =:email_id_hash";
@@ -82,14 +79,14 @@ ini_set('display_errors', 1);
                               echo '<br><br>If you are not automatically redirected, click here: <a href="http://scipy.in">OpenFOAM Symposium 2016</a>.';
                               header('Refresh: 3; URL=http://fossee.in/conference/cfd-symposium/');
                             }
-                          break;
-                  }
-                }
-              else
+                          }else
                 {
                   echo "Wrong Link please try again";
                   header('Refresh: 3; URL=http://fossee.in');
                 }
+                  
+                
+              
             }
         }
     }
