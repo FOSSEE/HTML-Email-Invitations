@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
   require_once('connection.inc');
   if (isset($_GET) && isset($_GET['key']))
     {
@@ -15,6 +17,7 @@
       global $conn;
       // try to update user with specified information
       $email_id_hash = urldecode($email_id_hash);
+     // var_dump($email_id_hash);die;
       $sql           = "SELECT email, unsubscribe, email_hash  FROM sent_email WHERE email_hash = :email_id_hash AND event= :event";
       $q             = $conn->prepare($sql);
       $q->execute(array(
@@ -29,7 +32,8 @@
                 {
                   switch ($event)
                   {
-                      case 'scipy 2015':
+
+                     case 'scipy 2015':
                           if ($row['unsubscribe'] == 0 && $row['email_hash'] == $email_id_hash)
                             {
                               $sql_up = "UPDATE sent_email SET unsubscribe = 1 WHERE email_hash =:email_id_hash ";
